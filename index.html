@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Seat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #fcfbfc;
+            --card-bg: #ffffff;
+            --primary-text: #1a1a1a;
+            --secondary-text: #707070;
+            --border-color: #e5e5e5;
+            --accent-color: #111111;
+            --error-color: #a94442;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--primary-text);
+            background-color: transparent;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-color);
+        }
+
+        input[type="text"]::placeholder {
+            color: #b3b3b3;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .links-container {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.85rem;
+        }
+
+        .links-container a {
+            color: var(--secondary-text);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .links-container a:hover {
+            border-color: var(--secondary-text);
+        }
+
+        /* Result View & Modal Hidden States */
+        .hidden {
+            display: none !important;
+        }
+
+        .result-view {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .guest-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .table-assignment {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            color: var(--accent-color);
+        }
+
+        .map-container {
+            width: 100%;
+            margin-bottom: 25px;
+            border-radius: calc(var(--radius) - 2px);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .map-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background-color: transparent;
+            color: var(--secondary-text);
+            border: 1px solid var(--border-color);
+            margin-top: 10px;
+        }
+
+        .back-btn:hover {
+            background-color: #fafafa;
+            color: var(--primary-text);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="searchView">
+            <h1>Find your Seat</h1>
+            <form id="searchForm" onsubmit="handleSearch(event)">
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        id="guestInput" 
+                        list="guestList" 
+                        placeholder="Enter your name" 
+                        autocomplete="off"
+                        required
+                    >
+                    <datalist id="guestList">
+                        </datalist>
+                </div>
+                <button type="submit">Find Table</button>
+            </form>
+            <div class="links-container">
+                <a onclick="showFullMap()">Seat Plan</a>
+            </div>
+        </div>
+
+        <div id="successView" class="result-view hidden">
+            <div class="guest-name" id="displayGuestName">Guest Name</div>
+            <div class="table-assignment" id="displayTable">Table X</div>
+            <div class="map-container">
+                <img id="tableMapImg" src="./table-map.png" alt="Seating Layout Map">
+            </div>
+            <button class="back-btn" onclick="resetView()">Search Again</button>
+        </div>
+
+        <div id="errorView" class="result-view hidden">
+            <h1>Not Found</h1>
+            <p class="error-message">
+                We couldn't find your name on the list. Please verify the spelling or speak with an usher for assistance.
+            </p>
+            <button class="back-btn" onclick="resetView()">Try Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Production Guest List Database (All pointing to your single seating chart file)
+        const guestDatabase = {
+            "kris pogoy": { table: "VIP 1" },
+            "jayson timbal": { table: "VIP 2" },
+            "trisha mae babila": { table: "VIP 1" },
+            "rain sempio": { table: "VIP 2" },
+            "zyne justine s. lomocso": { table: "Table 1" },
+            "mark keyboard": { table: "Table 2" },
+            "rafa rubio": { table: "Table 3" },
+            "mariane ruth d. sadogio": { table: "Table 4" },
+            "albert gabut": { table: "Table 5" },
+            "brazil regidor": { table: "Table 6" },
+            "cheska morente": { table: "Table 7" },
+            "ma. cecilia barde": { table: "Table 8" },
+            "jade remorosa": { table: "Table 9" },
+            "stephanie mae d. diamante": { table: "Table 10" },
+            "neil remorosa": { table: "Table 11" },
+            "richard jan gendoy": { table: "Table 1" },
+            "gilbillyjim c. molina": { table: "Table 2" },
+            "michael ruven l. durban": { table: "Table 3" },
+            "karen dupa-bagolor": { table: "Table 4" },
+            "ryan jay bagolor": { table: "Table 5" },
+            "lorenz glenn braza": { table: "Table 6" },
+            "mark zulieta": { table: "Table 7" },
+            "marry gene barba": { table: "Table 8" },
+            "cristy relatado": { table: "Table 9" },
+            "jeanyvi cahambing-basañez": { table: "Table 10" },
+            "marge dumag-orrica": { table: "Table 11" }
+        };
+
+        // UI Mapping Object to display elegant, properly formatted names back to guests
+        const displayNames = {
+            "kris pogoy": "Kris Pogoy",
+            "jayson timbal": "Jayson Timbal",
+            "trisha mae babila": "Trisha Mae Babila",
+            "rain sempio": "Rain Sempio",
+            "zyne justine s. lomocso": "Zyne Justine S. Lomocso",
+            "mark keyboard": "Mark Keyboard",
+            "rafa rubio": "Rafa Rubio",
+            "mariane ruth d. sadogio": "Mariane Ruth D. Sadogio",
+            "albert gabut": "Albert Gabut",
+            "brazil regidor": "Brazil Regidor",
+            "cheska morente": "Cheska Morente",
+            "ma. cecilia barde": "Ma. Cecilia Barde",
+            "jade remorosa": "Jade Remorosa",
+            "stephanie mae d. diamante": "Stephanie Mae D. Diamante",
+            "neil remorosa": "Neil Remorosa",
+            "richard jan gendoy": "Richard Jan Gendoy",
+            "gilbillyjim c. molina": "Gilbillyjim C. Molina",
+            "michael ruven l. durban": "Michael Ruven L. Durban",
+            "karen dupa-bagolor": "Karen Dupa-Bagolor",
+            "ryan jay bagolor": "Ryan Jay Bagolor",
+            "lorenz glenn braza": "Lorenz Glenn Braza",
+            "mark zulieta": "Mark Zulieta",
+            "marry gene barba": "Marry Gene Barba",
+            "cristy relatado": "Cristy Relatado",
+            "jeanyvi cahambing-basañez": "Jeanyvi Cahambing-Basañez",
+            "marge dumag-orrica": "Marge Dumag-Orrica"
+        };
+
+        // Populate HTML5 datalist with matching names on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const datalist = document.getElementById('guestList');
+            Object.keys(guestDatabase).forEach(key => {
+                const option = document.createElement('option');
+                option.value = displayNames[key];
+                datalist.appendChild(option);
+            });
+        });
+
+        // Core Search Logic
+        function handleSearch(event) {
+            event.preventDefault();
+            
+            const rawInput = document.getElementById('guestInput').value;
+            const cleanedInput = rawInput.trim().toLowerCase();
+
+            const searchView = document.getElementById('searchView');
+            const successView = document.getElementById('successView');
+            const errorView = document.getElementById('errorView');
+
+            searchView.classList.add('hidden');
+
+            if (guestDatabase.hasOwnProperty(cleanedInput)) {
+                const match = guestDatabase[cleanedInput];
+                
+                document.getElementById('displayGuestName').innerText = displayNames[cleanedInput];
+                document.getElementById('displayTable').innerText = match.table;
+                
+                successView.classList.remove('hidden');
+            } else {
+                errorView.classList.remove('hidden');
+            }
+        }
+
+        // Return to main layout state
+        function resetView() {
+            document.getElementById('guestInput').value = '';
+            document.getElementById('successView').classList.add('hidden');
+            document.getElementById('errorView').classList.add('hidden');
+            document.getElementById('searchView').classList.remove('hidden');
+        }
+
+        // Direct shortcut link to view the floor plan layout map instantly
+        function showFullMap() {
+            const searchView = document.getElementById('searchView');
+            const successView = document.getElementById('successView');
+            
+            searchView.classList.add('hidden');
+            
+            document.getElementById('displayGuestName').innerText = "Event Floor Plan";
+            document.getElementById('displayTable').innerText = "Overall Seating Layout";
+            
+            successView.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
