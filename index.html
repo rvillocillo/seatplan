@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Your Seat</title>
+    <title>Find Your Seat - Kiid and Mai</title>
+    
+    <!-- Google Fonts for Elegant Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-color: #fcfbfc;
-            --card-bg: #ffffff;
-            --primary-text: #1a1a1a;
-            --secondary-text: #707070;
-            --border-color: #e5e5e5;
-            --accent-color: #111111;
+            --bg-color: #fcfbf9;
+            --card-bg: rgba(245, 243, 238, 0.85);
+            --text-dark: #2c2c2c;
+            --text-muted: #666666;
+            --accent-black: #0a0a0a;
+            --accent-navy-blue: #1b263b;
+            --border-color: #dcd6cd;
             --error-color: #a94442;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            --radius: 8px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --radius: 20px;
         }
 
         * {
@@ -28,153 +31,220 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-color);
-            color: var(--primary-text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            color: var(--text-dark);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            -webkit-font-smoothing: antialiased;
+            background-image: radial-gradient(#e2ded7 0.75px, transparent 0.75px);
+            background-size: 24px 24px;
         }
 
         .container {
             width: 100%;
-            max-width: 420px;
-            background: var(--card-bg);
-            padding: 40px 30px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            max-width: 480px;
             text-align: center;
+        }
+
+        /* Header Styling */
+        header {
+            margin-bottom: 30px;
+        }
+
+        .subtitle-top {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .names {
+            font-family: 'Alex Brush', cursive;
+            font-size: 3.2rem;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            line-height: 1.1;
+        }
+
+        .headline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            font-weight: 600;
+            line-height: 1.4;
+            padding: 0 10px;
+        }
+
+        /* Card Container */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            padding: 30px 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            margin-top: 20px;
             transition: all 0.3s ease;
         }
 
-        h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 600;
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            letter-spacing: -0.5px;
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .input-group {
             position: relative;
+            width: 100%;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 16px;
+            padding: 16px 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            background-color: rgba(235, 232, 226, 0.6);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            color: var(--primary-text);
-            background-color: transparent;
+            border-radius: 4px;
             outline: none;
-            transition: border-color 0.2s ease;
+            transition: border-color 0.2s, background-color 0.2s;
         }
 
         input[type="text"]:focus {
-            border-color: var(--accent-color);
+            border-color: var(--text-dark);
+            background-color: #ffffff;
         }
 
         input[type="text"]::placeholder {
-            color: #b3b3b3;
+            color: #9e9a93;
+            font-style: italic;
         }
 
-        button {
+        .btn-submit {
             width: 100%;
             padding: 16px;
-            background-color: var(--accent-color);
+            background-color: var(--accent-black);
             color: #ffffff;
             border: none;
-            border-radius: var(--radius);
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
+            border-radius: 50px;
+            font-family: 'Alex Brush', cursive;
+            font-size: 1.8rem;
             cursor: pointer;
-            transition: opacity 0.2s ease;
+            transition: transform 0.2s, opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
         }
 
-        button:hover {
+        .btn-submit:hover {
             opacity: 0.9;
         }
 
-        .links-container {
-            margin-top: 35px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            font-size: 0.85rem;
+        .btn-submit:active {
+            transform: scale(0.98);
         }
 
-        .links-container a {
-            color: var(--secondary-text);
+        .footer-link {
+            display: inline-block;
+            margin-top: 15px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: var(--text-muted);
             text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s ease;
             cursor: pointer;
+            transition: color 0.2s;
         }
 
-        .links-container a:hover {
-            border-color: var(--secondary-text);
+        .footer-link:hover {
+            color: var(--text-dark);
         }
 
-        /* Result View & Modal Hidden States */
-        .hidden {
-            display: none !important;
+        /* Result View Area */
+        .result-container {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
         }
 
-        .result-view {
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        .guest-name {
+        .guest-title {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.8rem;
-            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 5px;
         }
 
         .table-assignment {
-            font-size: 1.4rem;
-            font-weight: 500;
-            margin-bottom: 25px;
-            color: var(--accent-color);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 20px;
         }
 
-        .map-container {
+        .table-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent-navy-blue);
+            display: block;
+            margin-top: 5px;
+        }
+
+        .map-wrapper {
             width: 100%;
-            margin-bottom: 25px;
-            border-radius: calc(var(--radius) - 2px);
+            border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--border-color);
+            background: #fff;
+            margin-bottom: 20px;
         }
 
-        .map-container img {
+        .map-wrapper img {
             width: 100%;
             height: auto;
             display: block;
         }
 
+        .btn-reset {
+            background: transparent;
+            border: 1px solid var(--text-dark);
+            color: var(--text-dark);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: var(--text-dark);
+            color: #fff;
+        }
+
+        /* Error Message */
         .error-message {
+            display: none;
             color: var(--error-color);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .back-btn {
-            background-color: transparent;
-            color: var(--secondary-text);
-            border: 1px solid var(--border-color);
-            margin-top: 10px;
-        }
-
-        .back-btn:hover {
-            background-color: #fafafa;
-            color: var(--primary-text);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            margin-top: 15px;
+            line-height: 1.4;
+            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
@@ -186,161 +256,120 @@
 <body>
 
     <div class="container">
-        <div id="searchView">
-            <h1>Find your Seat</h1>
-            <form id="searchForm" onsubmit="handleSearch(event)">
-                <div class="form-group">
-                    <input 
-                        type="text" 
-                        id="guestInput" 
-                        list="guestList" 
-                        placeholder="Enter your name" 
-                        autocomplete="off"
-                        required
-                    >
-                    <datalist id="guestList">
-                        </datalist>
+        <!-- Header Section -->
+        <header>
+            <div class="subtitle-top">The Wedding Of</div>
+            <h1 class="names">Kiid and Mai</h1>
+            <h2 class="headline">A Special Spot is Waiting for Our Favorite People</h2>
+        </header>
+
+        <!-- Main Interactive Card -->
+        <div class="card">
+            <!-- Search View -->
+            <div id="searchView">
+                <form class="search-form" id="seatingForm" onsubmit="event.preventDefault(); findSeat();">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="guestNameInput" 
+                            list="guestListOptions" 
+                            placeholder="Enter your name" 
+                            autocomplete="off" 
+                            required
+                        >
+                        <datalist id="guestListOptions"></datalist>
+                    </div>
+
+                    <button type="submit" class="btn-submit">find your seat</button>
+                </form>
+
+                <div id="errorMessage" class="error-message">
+                    We couldn't find that name on our list. Please check the spelling or ask a nearby usher for assistance!
                 </div>
-                <button type="submit">Find Table</button>
-            </form>
-            <div class="links-container">
-                <a onclick="showFullMap()">Seat Plan</a>
-            </div>
-        </div>
 
-        <div id="successView" class="result-view hidden">
-            <div class="guest-name" id="displayGuestName">Guest Name</div>
-            <div class="table-assignment" id="displayTable">Table X</div>
-            <div class="map-container">
-                <img id="tableMapImg" src="./table-map.png" alt="Seating Layout Map">
+                <!-- Redirects directly to STAGE.png -->
+                <a href="STAGE.png" target="_blank" class="footer-link">Seat Plan</a>
             </div>
-            <button class="back-btn" onclick="resetView()">Search Again</button>
-        </div>
 
-        <div id="errorView" class="result-view hidden">
-            <h1>Not Found</h1>
-            <p class="error-message">
-                We couldn't find your name on the list. Please verify the spelling or speak with an usher for assistance.
-            </p>
-            <button class="back-btn" onclick="resetView()">Try Again</button>
+            <!-- Result View -->
+            <div id="resultView" class="result-container">
+                <h3 class="guest-title" id="displayGuestName">Guest Name</h3>
+                <div class="table-assignment">
+                    You are seated at
+                    <span class="table-number" id="displayTableNumber">Table X</span>
+                </div>
+
+                <div class="map-wrapper">
+                    <img id="displayMapImage" src="" alt="Seating Chart Layout">
+                </div>
+
+                <button class="btn-reset" onclick="resetSearch()">Search Again</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Production Guest List Database (All pointing to your single seating chart file)
+        // =========================================================================
+        // GUEST DATABASE
+        // All guests map to STAGE.png
+        // =========================================================================
         const guestDatabase = {
-            "kris pogoy": { table: "VIP 1" },
-            "jayson timbal": { table: "VIP 2" },
-            "trisha mae babila": { table: "VIP 1" },
-            "rain sempio": { table: "VIP 2" },
-            "zyne justine s. lomocso": { table: "Table 1" },
-            "mark keyboard": { table: "Table 2" },
-            "rafa rubio": { table: "Table 3" },
-            "mariane ruth d. sadogio": { table: "Table 4" },
-            "albert gabut": { table: "Table 5" },
-            "brazil regidor": { table: "Table 6" },
-            "cheska morente": { table: "Table 7" },
-            "ma. cecilia barde": { table: "Table 8" },
-            "jade remorosa": { table: "Table 9" },
-            "stephanie mae d. diamante": { table: "Table 10" },
-            "neil remorosa": { table: "Table 11" },
-            "richard jan gendoy": { table: "Table 1" },
-            "gilbillyjim c. molina": { table: "Table 2" },
-            "michael ruven l. durban": { table: "Table 3" },
-            "karen dupa-bagolor": { table: "Table 4" },
-            "ryan jay bagolor": { table: "Table 5" },
-            "lorenz glenn braza": { table: "Table 6" },
-            "mark zulieta": { table: "Table 7" },
-            "marry gene barba": { table: "Table 8" },
-            "cristy relatado": { table: "Table 9" },
-            "jeanyvi cahambing-basañez": { table: "Table 10" },
-            "marge dumag-orrica": { table: "Table 11" }
+            "abraham bacus": { table: "Table 2", map: "STAGE.png" },
+            "matt daniel gamos": { table: "Table 2", map: "STAGE.png" },
+            "kim aubrey vincoy": { table: "Table 14", map: "STAGE.png" },
+            "mac scelwin alpas": { table: "Table 14", map: "STAGE.png" },
+            "angel sweet linao": { table: "Table 14", map: "STAGE.png" },
+            "justine joyce jambangan-molina": { table: "Table 11", map: "STAGE.png" },
+            "joan nardo": { table: "Table 13", map: "STAGE.png" },
+            "sheila ranara": { table: "Table 13", map: "STAGE.png" },
+            "jason paguidopon": { table: "Table 14", map: "STAGE.png" },
+            "ana lou paguidopon": { table: "Table 14", map: "STAGE.png" }
         };
 
-        // UI Mapping Object to display elegant, properly formatted names back to guests
-        const displayNames = {
-            "kris pogoy": "Kris Pogoy",
-            "jayson timbal": "Jayson Timbal",
-            "trisha mae babila": "Trisha Mae Babila",
-            "rain sempio": "Rain Sempio",
-            "zyne justine s. lomocso": "Zyne Justine S. Lomocso",
-            "mark keyboard": "Mark Keyboard",
-            "rafa rubio": "Rafa Rubio",
-            "mariane ruth d. sadogio": "Mariane Ruth D. Sadogio",
-            "albert gabut": "Albert Gabut",
-            "brazil regidor": "Brazil Regidor",
-            "cheska morente": "Cheska Morente",
-            "ma. cecilia barde": "Ma. Cecilia Barde",
-            "jade remorosa": "Jade Remorosa",
-            "stephanie mae d. diamante": "Stephanie Mae D. Diamante",
-            "neil remorosa": "Neil Remorosa",
-            "richard jan gendoy": "Richard Jan Gendoy",
-            "gilbillyjim c. molina": "Gilbillyjim C. Molina",
-            "michael ruven l. durban": "Michael Ruven L. Durban",
-            "karen dupa-bagolor": "Karen Dupa-Bagolor",
-            "ryan jay bagolor": "Ryan Jay Bagolor",
-            "lorenz glenn braza": "Lorenz Glenn Braza",
-            "mark zulieta": "Mark Zulieta",
-            "marry gene barba": "Marry Gene Barba",
-            "cristy relatado": "Cristy Relatado",
-            "jeanyvi cahambing-basañez": "Jeanyvi Cahambing-Basañez",
-            "marge dumag-orrica": "Marge Dumag-Orrica"
-        };
-
-        // Populate HTML5 datalist with matching names on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const datalist = document.getElementById('guestList');
+        // Populate HTML5 Datalist for Autocomplete
+        document.addEventListener("DOMContentLoaded", () => {
+            const datalist = document.getElementById("guestListOptions");
             Object.keys(guestDatabase).forEach(key => {
-                const option = document.createElement('option');
-                option.value = displayNames[key];
+                const option = document.createElement("option");
+                option.value = capitalizeWords(key);
                 datalist.appendChild(option);
             });
         });
 
-        // Core Search Logic
-        function handleSearch(event) {
-            event.preventDefault();
+        // Search logic
+        function findSeat() {
+            const inputField = document.getElementById("guestNameInput");
+            const errorMessage = document.getElementById("errorMessage");
+            const rawInput = inputField.value;
             
-            const rawInput = document.getElementById('guestInput').value;
             const cleanedInput = rawInput.trim().toLowerCase();
 
-            const searchView = document.getElementById('searchView');
-            const successView = document.getElementById('successView');
-            const errorView = document.getElementById('errorView');
-
-            searchView.classList.add('hidden');
-
-            if (guestDatabase.hasOwnProperty(cleanedInput)) {
-                const match = guestDatabase[cleanedInput];
+            if (guestDatabase[cleanedInput]) {
+                errorMessage.style.display = "none";
                 
-                document.getElementById('displayGuestName').innerText = displayNames[cleanedInput];
-                document.getElementById('displayTable').innerText = match.table;
-                
-                successView.classList.remove('hidden');
+                const guestData = guestDatabase[cleanedInput];
+                document.getElementById("displayGuestName").textContent = capitalizeWords(cleanedInput);
+                document.getElementById("displayTableNumber").textContent = guestData.table;
+                document.getElementById("displayMapImage").src = guestData.map;
+
+                document.getElementById("searchView").style.display = "none";
+                document.getElementById("resultView").style.display = "block";
             } else {
-                errorView.classList.remove('hidden');
+                errorMessage.style.display = "block";
             }
         }
 
-        // Return to main layout state
-        function resetView() {
-            document.getElementById('guestInput').value = '';
-            document.getElementById('successView').classList.add('hidden');
-            document.getElementById('errorView').classList.add('hidden');
-            document.getElementById('searchView').classList.remove('hidden');
+        // Reset back to search form
+        function resetSearch() {
+            document.getElementById("guestNameInput").value = "";
+            document.getElementById("errorMessage").style.display = "none";
+            document.getElementById("resultView").style.display = "none";
+            document.getElementById("searchView").style.display = "block";
         }
 
-        // Direct shortcut link to view the floor plan layout map instantly
-        function showFullMap() {
-            const searchView = document.getElementById('searchView');
-            const successView = document.getElementById('successView');
-            
-            searchView.classList.add('hidden');
-            
-            document.getElementById('displayGuestName').innerText = "Event Floor Plan";
-            document.getElementById('displayTable').innerText = "Overall Seating Layout";
-            
-            successView.classList.remove('hidden');
+        // Helper function to capitalize names
+        function capitalizeWords(str) {
+            return str.replace(/\b\w/g, l => l.toUpperCase());
         }
     </script>
 </body>
